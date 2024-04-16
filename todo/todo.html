@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TodoApp</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  
+</head>
+<body>
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="max-w-md w-full px-6 py-12 bg-white rounded-md shadow-md">
+      <h2 class="text-2xl font-semibold text-center mb-6">TodoApp Authentication</h2>
+      <form id="contactForm">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium mb-2">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Name" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium mb-2">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium mb-2">Password:</label>
+          <input type="password" id="password" name="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+        </div>
+        <button type="submit" id="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md">Sign Up</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1J893kvA5f9rkmWMNcIs-IRDAnxa4dU4",
+      authDomain: "dailyexpenditure-b6387.firebaseapp.com",
+      projectId: "dailyexpenditure-b6387",
+      storageBucket: "dailyexpenditure-b6387.appspot.com",
+      messagingSenderId: "340744753466",
+      appId: "1:340744753466:web:420150d36d240fc328c003",
+      measurementId: "G-CKYG3NR4VM"
+    };
+  
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = form['name'].value;
+      const email = form['email'].value;
+      const password = form['password'].value;
+      try {
+        await db.collection('users').doc(email).set({
+          name,
+          email,
+          password
+        });
+        alert('User created successfully', 'success');
+        // redirect to login page
+        window.location.replace('index3.html');
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+      }
+    });
+
+  </script>
+</body>
+</html>
+
+      
